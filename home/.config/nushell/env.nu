@@ -6,7 +6,10 @@ $env.BAT_THEME = "ansi-light"
 $env.EDITOR = "nvim"
 
 # fnm (Node version manager)
-fnm env --json | from json | load-env
+if (fnm list | complete | get exit_code) == 0 {
+    fnm env --json | from json | load-env
+    $env.PATH = ($env.PATH | prepend $"($env.FNM_MULTISHELL_PATH)/bin")
+}
 $env.FNM_VERSION_FILE_STRATEGY = "recursive"
 
 # Starship prompt

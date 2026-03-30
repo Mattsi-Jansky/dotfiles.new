@@ -1,3 +1,5 @@
+$env.config.show_banner = false
+
 # Starship prompt
 use ~/.cache/starship/init.nu
 
@@ -8,8 +10,17 @@ source ~/.config/nushell/funcs.nu
 fortune | randomsay | lolcat
 
 # fnm auto-switch on cd (reads .nvmrc)
+$env.config = ($env.config
+    | upsert hooks { default {} }
+    | upsert hooks.env_change { default {} }
+    | upsert hooks.env_change.PWD { default [] }
+)
 $env.config.hooks.env_change.PWD = (
-    $env.config.hooks.env_change.PWD | append {|| fnm use --silent-if-unchanged}
+    $env.config.hooks.env_change.PWD | append {||
+        if (fnm default | complete | get exit_code) == 0 {
+            fnm use --silent-if-unchanged
+        }
+    }
 )
 
 # Zoxide (autojump replacement)
