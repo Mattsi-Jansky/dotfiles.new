@@ -2,7 +2,7 @@
 awsprofile() {
 	if [[ -v 1 ]]; then
 		if [ $1 = '--list' ]; then
-			/usr/local/bin/gcat ~/.aws/credentials | grep '\[.*]'
+			grep '\[.*]' ~/.aws/credentials
 		else
 			echo "setting profile"
 			export AWS_PROFILE=$1
