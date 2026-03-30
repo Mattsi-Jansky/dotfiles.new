@@ -30,3 +30,7 @@ Output is neat and tidy:
 Verbose output is hidden, but errors are shown inline:
 
 ![](./docs/output-error.png)
+
+Interactive output can appear inline amongst other steps:
+
+![](./docs/output-interactive.png)
