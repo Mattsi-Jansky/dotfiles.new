@@ -59,15 +59,21 @@ def test_wrong_target_relinks(MockPath, _expand, _readlink, mock_remove, mock_sy
     mock_symlink.assert_called_once()
 
 
+@patch(f"{P}.os.symlink")
+@patch(f"{P}.os.remove")
 @patch(f"{P}.os.path.expanduser", return_value="/home/user/.zshrc")
 @patch(f"{P}.Path")
-def test_real_file_blocks(MockPath, _expand):
+def test_real_file_replaced(MockPath, _expand, mock_remove, mock_symlink):
     r = _make_runner()
-    MockPath.return_value = _mock_target(is_symlink=False, exists=True)
+    mock_target = _mock_target(is_symlink=False, exists=True)
+    mock_target.is_dir.return_value = False
+    MockPath.return_value = mock_target
 
     outcomes = _outcomes(r)
-    assert outcomes[0].result.status == "failed"
-    assert "not a symlink" in outcomes[0].result.message
+    assert outcomes[0].result.status == "ok"
+    assert "replaced" in outcomes[0].result.message
+    mock_remove.assert_called_once()
+    mock_symlink.assert_called_once()
 
 
 @patch(f"{P}.os.symlink")

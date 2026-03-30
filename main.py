@@ -2,6 +2,8 @@ import steps.shell_tools
 import steps.snap_tools
 import steps.dotfiles
 import steps.rust
+import steps.fnm
+import steps.nushell
 import steps.starship
 import steps.claude_code
 

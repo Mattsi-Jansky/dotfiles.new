@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from framework import runner
-from framework.result import Result, ok, skipped, failed
+from framework.result import Result, ok, skipped
 
 # Repo root: directory containing main.py (parent of framework/)
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
@@ -30,7 +30,13 @@ def symlink_dotfiles(group: str, dotfiles: list[Dotfile]) -> None:
                     os.symlink(source, target)
                     return ok("linked")
             elif target.exists():
-                return failed("target exists and is not a symlink")
+                if target.is_dir():
+                    import shutil
+                    shutil.rmtree(target)
+                else:
+                    os.remove(target)
+                os.symlink(source, target)
+                return ok("replaced")
             else:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 os.symlink(source, target)

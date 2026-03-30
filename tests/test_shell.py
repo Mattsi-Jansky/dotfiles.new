@@ -13,7 +13,7 @@ def test_successful_command():
     with patch("framework.shell.subprocess.run", return_value=mock_result) as mock_run:
         result = run("echo hello")
 
-    mock_run.assert_called_once_with("echo hello", shell=True, capture_output=True, text=True)
+    mock_run.assert_called_once_with("echo hello", shell=True, capture_output=True, text=True, input=None)
     assert result.success is True
     assert result.output == "hello"
 
