@@ -14,8 +14,6 @@ install_apt_packages("Shell Tools", [
     "git-lfs",
     "graphviz",
     "jq",
-    "libfontconfig1-dev",
-    "libfreetype6-dev",
     "libxcb-xfixes0-dev",
     "lolcat",
     "neovim",
