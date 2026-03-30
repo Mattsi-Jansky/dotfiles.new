@@ -60,6 +60,13 @@ def _clear_pending(tty: bool) -> None:
     sys.stdout.flush()
 
 
+def clear_pending_line() -> None:
+    """Clear the pending status line. Call before passthrough commands."""
+    if _is_tty():
+        sys.stdout.write(f"\r{CLEAR_LINE}")
+        sys.stdout.flush()
+
+
 def _print_outcome(outcome: StepOutcome, tty: bool) -> None:
     if outcome.result.items:
         print(f"  {outcome.name}")

@@ -8,8 +8,11 @@ class ShellResult:
     output: str  # combined stdout + stderr
 
 
-def run(command: str) -> ShellResult:
+def run(command: str, passthrough: bool = False) -> ShellResult:
     try:
+        if passthrough:
+            proc = subprocess.run(command, shell=True)
+            return ShellResult(success=proc.returncode == 0, output="")
         proc = subprocess.run(
             command, shell=True, capture_output=True, text=True
         )

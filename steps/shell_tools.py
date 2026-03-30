@@ -20,7 +20,6 @@ install_apt_packages("Shell Tools", [
     "lolcat",
     "neovim",
     "pkg-config",
-    "postgresql",
     "ripgrep",
     "snapd",
     "xclip",
