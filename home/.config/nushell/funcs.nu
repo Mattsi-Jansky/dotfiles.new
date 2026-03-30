@@ -1,7 +1,8 @@
 # Cowsay with random cowfile
-def randomsay [...args: string] {
+def randomsay []: string -> string {
+    let input = $in
     let cow = (cowsay -l | lines | skip 1 | split column " " | values | flatten | shuffle | first)
-    $args | str join " " | cowsay -f $cow
+    $input | cowsay -f $cow
 }
 
 # Docker cleanup
