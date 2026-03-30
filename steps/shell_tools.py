@@ -8,7 +8,7 @@ install_apt_packages("Shell Tools", [
     "curl",
     "fd-find",
     "fish",
-    "fortune",
+    "fortune-mod",
     "fzf",
     "git",
     "git-lfs",
