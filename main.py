@@ -1,11 +1,12 @@
+# Steps run in import order. Ordering matters!
 import steps.shell_tools
 import steps.snap_tools
-import steps.dotfiles
-import steps.rust
-import steps.fnm
-import steps.nushell
+import steps.rust                 # installs cargo
+import steps.fnm                  # needs cargo
+import steps.nushell              # needs cargo
 import steps.starship
 import steps.claude_code
+import steps.dotfiles
 
 from framework import runner
 from framework.printer import print_results, print_summary
