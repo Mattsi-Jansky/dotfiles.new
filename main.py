@@ -1,7 +1,6 @@
 import steps.shell_tools
 import steps.snap_tools
 import steps.dotfiles
-import steps.git
 import steps.rust
 import steps.claude_code
 
