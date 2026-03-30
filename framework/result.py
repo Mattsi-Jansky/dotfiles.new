@@ -8,6 +8,7 @@ Status = Literal["ok", "skipped", "failed"]
 class ItemResult:
     name: str
     status: Status
+    message: str = ""
 
 
 @dataclass

@@ -11,8 +11,7 @@ def _outcomes(runner):
     return [e for e in runner.run_all() if isinstance(e, StepOutcome)]
 
 
-@patch(f"{P}.clear_pending_line")
-def test_all_already_installed(_clear):
+def test_all_already_installed():
     r = Runner()
     with patch(f"{P}.runner", r):
         from framework.providers.snap import install_snap_packages
@@ -27,8 +26,7 @@ def test_all_already_installed(_clear):
     assert all(item.status == "skipped" for item in result.items)
 
 
-@patch(f"{P}.clear_pending_line")
-def test_classic_flag_applied(_clear):
+def test_classic_flag_applied():
     r = Runner()
     with patch(f"{P}.runner", r):
         from framework.providers.snap import install_snap_packages
@@ -36,7 +34,7 @@ def test_classic_flag_applied(_clear):
 
     commands = []
 
-    def mock_run(cmd, **kwargs):
+    def mock_run(cmd):
         commands.append(cmd)
         if cmd.startswith("snap list"):
             return ShellResult(success=False, output="")
@@ -49,14 +47,13 @@ def test_classic_flag_applied(_clear):
     assert any("--classic" in c for c in install_cmds)
 
 
-@patch(f"{P}.clear_pending_line")
-def test_partial_failure(_clear):
+def test_partial_failure():
     r = Runner()
     with patch(f"{P}.runner", r):
         from framework.providers.snap import install_snap_packages
         install_snap_packages("G", [SnapPackage("good"), SnapPackage("bad")])
 
-    def mock_run(cmd, **kwargs):
+    def mock_run(cmd):
         if cmd == "snap list good":
             return ShellResult(success=False, output="")
         if cmd == "snap list bad":
@@ -64,7 +61,7 @@ def test_partial_failure(_clear):
         if "good" in cmd and "install" in cmd:
             return ShellResult(success=True, output="")
         if "bad" in cmd and "install" in cmd:
-            return ShellResult(success=False, output="error")
+            return ShellResult(success=False, output="error: snap not found")
         return ShellResult(success=False, output="")
 
     with patch(f"{P}.run", side_effect=mock_run):
@@ -75,3 +72,5 @@ def test_partial_failure(_clear):
     items_by_name = {i.name: i.status for i in result.items}
     assert items_by_name["good"] == "ok"
     assert items_by_name["bad"] == "failed"
+    bad_item = next(i for i in result.items if i.name == "bad")
+    assert "snap not found" in bad_item.message

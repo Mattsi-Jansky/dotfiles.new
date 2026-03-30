@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from framework import runner
 from framework.result import Result, ItemResult
 from framework.shell import run
-from framework.printer import clear_pending_line
 
 
 @dataclass
@@ -28,13 +27,12 @@ def install_snap_packages(group: str, packages: list[SnapPackage]) -> None:
             cmd = f"sudo snap install {pkg.name}"
             if pkg.classic:
                 cmd += " --classic"
-            clear_pending_line()
-            install_result = run(cmd, passthrough=True)
+            install_result = run(cmd)
 
             if install_result.success:
                 items.append(ItemResult(name=pkg.name, status="ok"))
             else:
-                items.append(ItemResult(name=pkg.name, status="failed"))
+                items.append(ItemResult(name=pkg.name, status="failed", message=install_result.output))
 
         # Determine top-level status
         statuses = {item.status for item in items}

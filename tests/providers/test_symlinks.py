@@ -54,7 +54,7 @@ def test_wrong_target_relinks(MockPath, _expand, _readlink, mock_remove, mock_sy
 
     outcomes = _outcomes(r)
     assert outcomes[0].result.status == "ok"
-    assert "relinked" in outcomes[0].result.message
+    assert "linked" in outcomes[0].result.message
     mock_remove.assert_called_once()
     mock_symlink.assert_called_once()
 

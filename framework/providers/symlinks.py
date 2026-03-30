@@ -28,7 +28,7 @@ def symlink_dotfiles(group: str, dotfiles: list[Dotfile]) -> None:
                 else:
                     os.remove(target)
                     os.symlink(source, target)
-                    return ok("relinked")
+                    return ok("linked")
             elif target.exists():
                 return failed("target exists and is not a symlink")
             else:

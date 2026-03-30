@@ -1,7 +1,6 @@
 from framework import runner
 from framework.result import Result, ItemResult
 from framework.shell import run
-from framework.printer import clear_pending_line
 
 
 def install_apt_packages(group: str, packages: list[str]) -> None:
@@ -20,9 +19,10 @@ def install_apt_packages(group: str, packages: list[str]) -> None:
                 to_install.append(pkg)
 
         # Install missing packages in one call
+        install_output = ""
         if to_install:
-            clear_pending_line()
-            run(f"sudo apt install -y {' '.join(to_install)}", passthrough=True)
+            result = run(f"sudo apt install -y {' '.join(to_install)}")
+            install_output = result.output
 
         # Build item results
         for pkg in packages:
@@ -33,7 +33,7 @@ def install_apt_packages(group: str, packages: list[str]) -> None:
                 if verify.success:
                     items.append(ItemResult(name=pkg, status="ok"))
                 else:
-                    items.append(ItemResult(name=pkg, status="failed"))
+                    items.append(ItemResult(name=pkg, status="failed", message=install_output))
 
         # Determine top-level status
         statuses = {item.status for item in items}
