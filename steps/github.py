@@ -49,8 +49,8 @@ def generate_ssh_key() -> Result:
 @runner.step(group="GitHub", name="Authenticate GitHub CLI")
 def authenticate_gh() -> Result:
     auth = run("gh auth status")
-    # if auth.success:
-    #     return skipped("already authenticated")
+    if auth.success:
+        return skipped("already authenticated")
 
     login = subprocess.run(
         "gh auth login --git-protocol ssh --web "
