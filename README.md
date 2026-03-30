@@ -1,8 +1,10 @@
-# Dotfiles
+# Dotfiles++
 
 ## Overview
 
 A lightweight Python framework for deterministic-ish machine configuration. It stores idempotent setup functions, executes them, and pretty-prints grouped results. No external dependencies. Clone the repo and run `python3 main.py`.
+
+This is [very important and worthwhile](https://thedecisionlab.com/biases/bikeshedding). If you enjoy this, fork it and make your own.
 
 ## Tests
 
