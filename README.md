@@ -6,13 +6,6 @@ A lightweight Python framework for deterministic-ish machine configuration. It s
 
 This is [very important and worthwhile](https://thedecisionlab.com/biases/bikeshedding). If you enjoy this, fork it and make your own.
 
-## Tests
-
-```sh
-pip install pytest
-python3 -m pytest tests/
-```
-
 ## Goals
 
 - Runnable on a fresh Ubuntu machine with only `git` and `python3` (i.e. no external dependencies)
@@ -20,3 +13,20 @@ python3 -m pytest tests/
 - Steps are grouped and results are pretty-printed to the terminal with ANSI colours
 - Failing steps must not abort the run; all steps should always be attempted
 - The framework and the configuration that uses it live in separate layers
+
+## Tests
+
+```sh
+pip install pytest
+python3 -m pytest tests/
+```
+
+## Screenshots
+
+Output is neat and tidy:
+
+![](./docs/output.png)
+
+Verbose output is hidden, but errors are shown inline:
+
+![](./docs/output-error.png)
