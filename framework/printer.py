@@ -1,7 +1,7 @@
 import sys
 from typing import Iterable
 
-from framework.runner import StepStarted, StepOutcome, StepEvent
+from framework.runner import StepStarted, ItemOutcome, StepOutcome, StepEvent
 
 RULE_WIDTH = 56
 
@@ -61,17 +61,19 @@ def _clear_pending(tty: bool) -> None:
     sys.stdout.flush()
 
 
+def _print_item(item, tty: bool) -> None:
+    icon = _icon(item.status, tty)
+    coloured_icon = _colour(item.status, icon, tty)
+    print(f"    {coloured_icon}  {item.name}")
+    if item.status == "failed" and item.message:
+        for line in item.message.strip().splitlines():
+            print(f"         {_colour('failed', line, tty)}")
+
 
 def _print_outcome(outcome: StepOutcome, tty: bool) -> None:
     if outcome.result.items:
-        print(f"  {outcome.name}")
-        for item in outcome.result.items:
-            icon = _icon(item.status, tty)
-            coloured_icon = _colour(item.status, icon, tty)
-            print(f"    {coloured_icon}  {item.name}")
-            if item.status == "failed" and item.message:
-                for line in item.message.strip().splitlines():
-                    print(f"         {_colour('failed', line, tty)}")
+        # Items were already printed inline via ItemOutcome events
+        pass
     else:
         icon = _icon(outcome.result.status, tty)
         coloured_icon = _colour(outcome.result.status, icon, tty)
@@ -86,7 +88,9 @@ def print_results(events: Iterable[StepEvent]) -> list[StepOutcome]:
     """Print each step as it starts and finishes. Returns all outcomes for summary."""
     tty = _is_tty()
     current_group = None
+    current_step_name = None
     all_outcomes: list[StepOutcome] = []
+    items_printed = False
 
     for event in events:
         if isinstance(event, StepStarted):
@@ -95,10 +99,20 @@ def print_results(events: Iterable[StepEvent]) -> list[StepOutcome]:
                     print()
                 _print_group_header(event.group)
                 current_group = event.group
+            current_step_name = event.name
+            items_printed = False
             _print_pending(event.name, tty)
 
+        elif isinstance(event, ItemOutcome):
+            if not items_printed:
+                _clear_pending(tty)
+                print(f"  {current_step_name}")
+                items_printed = True
+            _print_item(event.item, tty)
+
         elif isinstance(event, StepOutcome):
-            _clear_pending(tty)
+            if not items_printed:
+                _clear_pending(tty)
             _print_outcome(event, tty)
             all_outcomes.append(event)
 

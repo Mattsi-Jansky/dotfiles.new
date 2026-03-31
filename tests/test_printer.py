@@ -1,7 +1,7 @@
 import io
 from unittest.mock import patch, MagicMock
 
-from framework.runner import StepStarted, StepOutcome, StepEvent
+from framework.runner import StepStarted, ItemOutcome, StepOutcome, StepEvent
 from framework.result import Result, ItemResult
 from framework.printer import print_results, print_summary
 
@@ -11,6 +11,8 @@ def _to_events(outcomes: list[StepOutcome]) -> list[StepEvent]:
     events: list[StepEvent] = []
     for o in outcomes:
         events.append(StepStarted(group=o.group, name=o.name))
+        for item in o.result.items:
+            events.append(ItemOutcome(item=item))
         events.append(o)
     return events
 
