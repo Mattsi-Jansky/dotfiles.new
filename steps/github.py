@@ -1,10 +1,9 @@
 import os
 import shutil
-import subprocess
 
 from framework import runner
 from framework.result import Result, ok, skipped, failed
-from framework.shell import run
+from framework.shell import run, run_interactive
 
 SSH_KEY_PATH = os.path.expanduser("~/.ssh/github")
 
@@ -46,30 +45,33 @@ def generate_ssh_key() -> Result:
     return ok() if gen.success else failed(gen.output)
 
 
-@runner.step(group="GitHub", name="Authenticate GitHub CLI")
+@runner.step(group="GitHub", name="Authenticate GitHub CLI", interactive=True)
 def authenticate_gh() -> Result:
     auth = run("gh auth status")
     if auth.success:
         return skipped("already authenticated")
 
-    login = subprocess.run(
+    login = run_interactive(
         "gh auth login --git-protocol ssh --web "
         "--skip-ssh-key --scopes admin:public_key",
-        shell=True,
+        label="GitHub Login",
     )
-    if login.returncode != 0:
-        return failed("gh auth login failed")
-
-    return ok()
+    return ok() if login.success else failed(login.output)
 
 
 @runner.step(group="GitHub", name="Upload SSH key")
 def upload_ssh_key() -> Result:
     import socket
+
+    # Requires authenticated gh CLI
+    auth = run("gh auth status")
+    if not auth.success:
+        return skipped("gh not authenticated")
+
     hostname = socket.gethostname()
 
     # Check if this key is already uploaded
-    check = run(f"gh ssh-key list")
+    check = run("gh ssh-key list")
     if check.success:
         pub_key = open(f"{SSH_KEY_PATH}.pub").read().split()[1]
         if pub_key in check.output:
