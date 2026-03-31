@@ -5,7 +5,6 @@ from framework.providers.snap import install_snap_packages, SnapPackage
 
 install_snap_packages("Snap Tools", [
     SnapPackage("slack"),
-    SnapPackage("code", classic=True),
     SnapPackage("powershell", classic=True),
     SnapPackage("intellij-idea-ultimate", classic=True),
 ], skip_in_test=True)
