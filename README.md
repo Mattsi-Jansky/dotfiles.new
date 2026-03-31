@@ -4,7 +4,7 @@
 
 A lightweight Python framework for deterministic-ish machine configuration. It stores idempotent setup functions, executes them, and pretty-prints grouped results. No external dependencies. Clone the repo and run `python3 main.py`.
 
-This is [very important and worthwhile](https://thedecisionlab.com/biases/bikeshedding). If you enjoy this, fork it and make your own.
+This is [very important and worthwhile](https://thedecisionlab.com/biases/bikeshedding).
 
 ## Goals
 
@@ -20,6 +20,10 @@ This is [very important and worthwhile](https://thedecisionlab.com/biases/bikesh
 pip install pytest
 python3 -m pytest tests/
 ```
+
+## Extensibility
+
+If you enjoy this, fork it and make your own. Add new entries in `steps` using `@runner.step` to customise it to your needs.
 
 ## Screenshots
 
