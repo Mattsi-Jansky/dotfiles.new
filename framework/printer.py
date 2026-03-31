@@ -9,6 +9,7 @@ RULE_WIDTH = 56
 GREEN = "\033[32m"
 YELLOW = "\033[33m"
 RED = "\033[31m"
+DIM = "\033[2m"
 RESET = "\033[0m"
 
 # Terminal control
@@ -76,7 +77,8 @@ def _print_outcome(outcome: StepOutcome, tty: bool) -> None:
         coloured_icon = _colour(outcome.result.status, icon, tty)
         line = f"  {coloured_icon}  {outcome.name}"
         if outcome.result.message:
-            line += f"  {outcome.result.message}"
+            msg = f"{DIM}{outcome.result.message}{RESET}" if tty else outcome.result.message
+            line += f"  {msg}"
         print(line)
 
 
