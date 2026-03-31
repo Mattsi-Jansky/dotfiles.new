@@ -15,7 +15,7 @@ RESET = "\033[0m"
 # Terminal control
 CLEAR_LINE = "\033[2K"
 
-EMOJI_ICONS = {"ok": "✅", "skipped": "⏭️", "failed": "❌"}
+EMOJI_ICONS = {"ok": "✅", "skipped": "⏩", "failed": "❌"}
 ASCII_ICONS = {"ok": "[ok]", "skipped": "[--]", "failed": "[!!]"}
 PENDING_ICON_EMOJI = "⏳"
 PENDING_ICON_ASCII = "[..]"
