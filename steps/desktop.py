@@ -10,9 +10,13 @@ SETTINGS = [
     ("Dock icon size", "org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 36"),
     ("Night light", "org.gnome.settings-daemon.plugins.color night-light-enabled true"),
     ("Night light temperature", "org.gnome.settings-daemon.plugins.color night-light-temperature 3500"),
-    ("Show hidden files", "org.gnome.nautilus.preferences show-hidden-files true"),
-    ("Sort folders first", "org.gnome.nautilus.preferences sort-directories-first true"),
-    ("List view in files", "org.gnome.nautilus.preferences default-folder-viewer 'list-view'"),
+    ("Workspaces in all screens", "org.gnome.mutter workspaces-only-on-primary false"),
+    ("App switcher only shows current workspace", "org.gnome.shell.extensions.tiling-assistant tiling-popup-all-workspace false"),
+    ("App switcher only shows current screen", "org.gnome.shell.extensions.dash-to-dock isolate-monitors true"),
+    ("Performance battery mode", "org.gnome.shell last-selected-power-profile 'performance'"),
+    ("No dimming screen on inactivity", "org.gnome.settings-daemon.plugins.power idle-dim false"),
+    ("Do not switch screen off after inactivity", "org.gnome.desktop.session idle-delay 0"),
+    ("Hide home folder on desktop", "org.gnome.shell.extensions.ding show-home false")
 ]
 
 
