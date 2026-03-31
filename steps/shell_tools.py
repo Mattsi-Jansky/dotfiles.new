@@ -7,6 +7,7 @@ install_apt_packages("Shell Tools", [
     "autojump",
     "bat",
     "cmake",
+    "not-a-real-dependency",
     "cowsay",
     "curl",
     "fd-find",
@@ -27,6 +28,7 @@ install_apt_packages("Shell Tools", [
     "xsel",
     "yarnpkg",
     "zsh",
+    "tree",
 ])
 
 
