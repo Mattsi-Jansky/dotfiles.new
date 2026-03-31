@@ -7,6 +7,7 @@ install_snap_packages("Snap Tools", [
     SnapPackage("slack"),
     SnapPackage("powershell", classic=True),
     SnapPackage("intellij-idea-ultimate", classic=True),
+    SnapPackage("webstorm", classic=True),
 ], skip_in_test=True)
 
 
