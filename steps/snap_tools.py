@@ -8,7 +8,8 @@ install_snap_packages("Snap Tools", [
     SnapPackage("powershell", classic=True),
     SnapPackage("intellij-idea-ultimate", classic=True),
     SnapPackage("webstorm", classic=True),
-    SnapPackage("obsidian", classic=True)
+    SnapPackage("obsidian", classic=True),
+    SnapPackage("spotify", classic=True)
 ], skip_in_test=True)
 
 
