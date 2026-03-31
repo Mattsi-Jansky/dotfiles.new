@@ -18,7 +18,7 @@ $env.config = ($env.config
 $env.config.hooks.env_change.PWD = (
     $env.config.hooks.env_change.PWD | append {||
         if (fnm default | complete | get exit_code) == 0 {
-            fnm use --silent-if-unchanged
+            fnm use --silent-if-unchanged --install-if-missing
         }
     }
 )
