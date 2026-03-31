@@ -8,6 +8,7 @@ import steps.nushell              # needs cargo
 import steps.starship
 import steps.claude_code
 import steps.vscode
+import steps.desktop
 import steps.dotfiles
 
 from framework import runner
