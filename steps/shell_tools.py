@@ -1,4 +1,7 @@
+from framework import runner
+from framework.result import Result
 from framework.providers.apt import install_apt_packages
+from framework.providers.cargo import cargo_install
 
 install_apt_packages("Shell Tools", [
     "autojump",
@@ -25,3 +28,8 @@ install_apt_packages("Shell Tools", [
     "yarnpkg",
     "zsh",
 ])
+
+
+@runner.step(group="Shell Tools", name="git-delta")
+def install_git_delta() -> Result:
+    return cargo_install("git-delta")

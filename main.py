@@ -1,8 +1,8 @@
 # Steps run in import order. Ordering matters!
-import steps.shell_tools
 import steps.snap_tools
 import steps.github
 import steps.rust                 # installs cargo
+import steps.shell_tools          # needs cargo
 import steps.fnm                  # needs cargo
 import steps.nushell              # needs cargo
 import steps.starship

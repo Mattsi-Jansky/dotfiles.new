@@ -9,7 +9,8 @@ install_snap_packages("Snap Tools", [
     SnapPackage("intellij-idea-ultimate", classic=True),
     SnapPackage("webstorm", classic=True),
     SnapPackage("obsidian", classic=True),
-    SnapPackage("spotify", classic=True)
+    SnapPackage("spotify", classic=True),
+    SnapPackage("gimp"),
 ], skip_in_test=True)
 
 
