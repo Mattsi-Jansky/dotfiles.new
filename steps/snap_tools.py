@@ -8,10 +8,10 @@ install_snap_packages("Snap Tools", [
     SnapPackage("code", classic=True),
     SnapPackage("powershell", classic=True),
     SnapPackage("intellij-idea-ultimate", classic=True),
-])
+], skip_in_test=True)
 
 
-@runner.step(group="Snap Tools", name="Refresh snaps")
+@runner.step(group="Snap Tools", name="Refresh snaps", skip_in_test=True)
 def refresh_snaps() -> Result:
     result = run("sudo snap refresh")
     return ok() if result.success else failed(result.output)
@@ -25,8 +25,8 @@ def docker_group() -> Result:
         if not create.success:
             return failed(create.output)
 
-    import os
-    user = os.environ.get("USER", "")
+    import getpass
+    user = getpass.getuser()
     check = run(f"id -nG {user}")
     if "docker" in check.output.split():
         return skipped("already in group")

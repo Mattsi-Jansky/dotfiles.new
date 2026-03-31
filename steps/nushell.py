@@ -17,7 +17,7 @@ def install_zoxide() -> Result:
     return cargo_install("zoxide")
 
 
-@runner.step(group="Nushell", name="Set default shell")
+@runner.step(group="Nushell", name="Set default shell", interactive=True)
 def set_default_shell() -> Result:
     nu_path = shutil.which("nu")
     if not nu_path:

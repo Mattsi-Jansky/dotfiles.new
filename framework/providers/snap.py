@@ -11,8 +11,9 @@ class SnapPackage:
     classic: bool = False
 
 
-def install_snap_packages(group: str, packages: list[SnapPackage]) -> None:
-    @runner.step(group=group, name="snap packages")
+def install_snap_packages(group: str, packages: list[SnapPackage],
+                          skip_in_test: bool = False) -> None:
+    @runner.step(group=group, name="snap packages", skip_in_test=skip_in_test)
     def _snap_step() -> Result:
         items: list[ItemResult] = []
 
