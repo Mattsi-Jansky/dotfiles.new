@@ -1,5 +1,6 @@
 # Steps run in import order. Ordering matters!
 import steps.snap_tools
+import steps.docker
 import steps.github
 import steps.rust                 # installs cargo
 import steps.shell_tools          # needs cargo
