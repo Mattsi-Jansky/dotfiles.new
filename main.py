@@ -5,6 +5,7 @@ import steps.github
 import steps.rust                 # installs cargo
 import steps.shell_tools          # needs cargo
 import steps.fnm                  # needs cargo
+import steps.mise
 import steps.nushell              # needs cargo
 import steps.starship
 import steps.claude_code

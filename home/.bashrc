@@ -8,6 +8,9 @@ export NVM_DIR="$HOME/.nvm"
 #Cargo binaries
 export PATH=$PATH:$HOME/.cargo/bin
 
+# mise activation
+[ -n "$BASH_VERSION" ] && eval "$(mise activate bash)"
+
 #Local RC for settings relevant to the local machine I don't want to push to my dotfiles
 if [[ -f "$HOME/.localrc" ]]; then
   source "$HOME/.localrc"

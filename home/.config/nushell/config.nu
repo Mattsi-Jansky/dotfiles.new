@@ -28,3 +28,6 @@ source ~/.cache/zoxide/init.nu
 
 # Aliases
 source ~/.config/nushell/aliases.nu
+
+# mise activation
+use ($nu.default-config-dir | path join mise.nu)
