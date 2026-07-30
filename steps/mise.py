@@ -58,3 +58,14 @@ def install_java_21() -> Result:
 @runner.step(group="mise", name="Install Java 25")
 def install_java_25() -> Result:
     return _install_java("25")
+
+
+@runner.step(group="mise", name="Install Terraform")
+def install_terraform() -> Result:
+    if not shutil.which("mise"):
+        return failed("mise not installed")
+    result = run("mise ls --installed terraform")
+    if result.success and any(line.split()[:1] == ["terraform"] for line in result.output.splitlines()):
+        return skipped("already installed")
+    result = run("mise use --global terraform@latest")
+    return ok() if result.success else failed(result.output)
