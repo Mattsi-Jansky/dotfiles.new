@@ -53,7 +53,7 @@ def test_standard_step_with_message():
 
 def test_skipped_step():
     output = _capture_results([StepOutcome("G", "Check", Result("skipped", "already done"))])
-    assert "⏭️" in output
+    assert "⏩" in output
     assert "already done" in output
 
 
@@ -97,7 +97,7 @@ def test_emoji_icons_when_tty():
     ]
     output = _capture_results(outcomes, is_tty=True)
     assert "✅" in output
-    assert "⏭️" in output
+    assert "⏩" in output
     assert "❌" in output
 
 
