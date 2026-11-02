@@ -3,6 +3,11 @@ $env.config.show_banner = false
 # Starship prompt
 use ~/.cache/starship/init.nu
 
+# Transient prompt: once a command is submitted, collapse its two-line prompt
+# to a single "❯" (green/red by exit status), like p10k's transient_prompt.
+$env.TRANSIENT_PROMPT_COMMAND = {|| ^starship module character $"--status=($env.LAST_EXIT_CODE)" }
+$env.TRANSIENT_PROMPT_COMMAND_RIGHT = ""
+
 # Custom functions
 source ~/.config/nushell/funcs.nu
 
