@@ -20,6 +20,11 @@ starship init nu | save -f ~/.cache/starship/init.nu
 mkdir ~/.cache/zoxide
 zoxide init nushell | save -f ~/.cache/zoxide/init.nu
 
-# mise activation
+# mise activation. config.nu `use`s mise.nu at parse time, so the file must
+# exist even when mise isn't on PATH (e.g. nu as a login shell before PATH is set).
 let mise_path = $nu.default-config-dir | path join mise.nu
-^mise activate nu | save $mise_path --force
+if (which mise | is-not-empty) {
+    ^mise activate nu | save $mise_path --force
+} else {
+    "" | save $mise_path --force
+}
