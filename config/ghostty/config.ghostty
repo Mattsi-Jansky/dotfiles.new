@@ -1,4 +1,6 @@
 theme = Catppuccin Mocha
+# Run nushell in the terminal without making it the login shell
+command = /home/mattsi/.cargo/bin/nu
 keybind = ctrl+shift+d=new_split:right
 keybind = ctrl+shift+alt+d=new_split:down
 keybind = alt+left=goto_split:left
