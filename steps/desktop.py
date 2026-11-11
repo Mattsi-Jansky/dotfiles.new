@@ -38,6 +38,18 @@ def _dbus(dest: str, path: str, method: str, *args: str) -> str:
     return f"dbus-send --session --print-reply --dest={dest} {path} {method} {quoted_args}".rstrip()
 
 
+# Qt key codes, as kglobalaccel expects them over DBus
+QT_META = 0x10000000
+QT_F1 = 0x01000030
+
+
+def _set_shortcut(component: str, action: str, *keys: int) -> str:
+    action_id = f"['{component}', '{action}', '', '']"
+    key_list = "[" + ", ".join(f"([{k}, 0, 0, 0],)" for k in keys) + "]"
+    return (f"gdbus call --session --dest org.kde.kglobalaccel --object-path /kglobalaccel "
+            f"--method org.kde.KGlobalAccel.setForeignShortcutKeys \"{action_id}\" '{key_list}'")
+
+
 PANEL_SCRIPT = 'panels().forEach(function (p) { p.location = "bottom"; p.hiding = "autohide"; });'
 POWER_PROFILES = ["AC", "Battery", "LowBattery"]
 
@@ -59,6 +71,9 @@ KDE_COMMANDS = [
       for p in POWER_PROFILES],
     *[(f"Do not switch screen off after inactivity ({p})", _kwrite("powerdevilrc", [p, "Display"], "TurnOffDisplayWhenIdle", "false"))
       for p in POWER_PROFILES],
+    # Default is Meta+Fn and Ctrl+Fn; drop Ctrl+Fn so it reaches apps (e.g. Ctrl+F4 closes Firefox tabs)
+    *[(f"Switch to desktop {n} with Meta+F{n} only", _set_shortcut("kwin", f"Switch to Desktop {n}", QT_META | (QT_F1 + n - 1)))
+      for n in range(1, 5)],
     ("Reload KWin", _dbus("org.kde.KWin", "/KWin", "org.kde.KWin.reconfigure")),
     ("Reload power management", _dbus(
         "org.kde.Solid.PowerManagement", "/org/kde/Solid/PowerManagement",
