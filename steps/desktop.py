@@ -50,7 +50,7 @@ def _set_shortcut(component: str, action: str, *keys: int) -> str:
             f"--method org.kde.KGlobalAccel.setForeignShortcutKeys \"{action_id}\" '{key_list}'")
 
 
-PANEL_SCRIPT = 'panels().forEach(function (p) { p.location = "bottom"; p.hiding = "autohide"; });'
+PANEL_SCRIPT = 'panels().forEach(function (p) { p.location = "top"; p.hiding = "autohide"; p.height = 46; });'
 POWER_PROFILES = ["AC", "Battery", "LowBattery"]
 
 # Plasma 6. Not listed because they are already the Plasma defaults: virtual
@@ -58,7 +58,7 @@ POWER_PROFILES = ["AC", "Battery", "LowBattery"]
 KDE_COMMANDS = [
     # The global theme also switches GTK apps to Breeze Dark
     ("Dark mode", "plasma-apply-lookandfeel -a org.kde.breezedark.desktop"),
-    ("Panel at bottom, auto-hide", _dbus(
+    ("Panel at top, auto-hide, 46px high", _dbus(
         "org.kde.plasmashell", "/PlasmaShell", "org.kde.PlasmaShell.evaluateScript",
         f"string:{PANEL_SCRIPT}")),
     ("Night light", _kwrite("kwinrc", ["NightColor"], "Active", "true")),
