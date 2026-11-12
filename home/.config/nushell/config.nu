@@ -1,5 +1,10 @@
 $env.config.show_banner = false
 
+# Per-tab history: up-arrow only walks this session's commands, while
+# Ctrl+R and `history` still search across all sessions. Isolation needs sqlite.
+$env.config.history.file_format = "sqlite"
+$env.config.history.isolation = true
+
 # Starship prompt
 use ~/.cache/starship/init.nu
 
