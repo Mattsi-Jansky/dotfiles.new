@@ -23,6 +23,9 @@ install_apt_packages("Shell Tools", [
     "pkg-config",
     "ripgrep",
     "snapd",
+    # Claude Code and other CLIs copy via wl-copy on Wayland; without it they
+    # fall back to xclip, which Wayland-native apps like Ghostty can't paste from
+    "wl-clipboard",
     "xclip",
     "xsel",
     "yarnpkg",
