@@ -36,4 +36,3 @@ alias dc = docker compose
 alias vim = nvim
 alias yarn = yarnpkg
 alias l = ls
-alias cat = batcat

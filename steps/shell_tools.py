@@ -6,6 +6,7 @@ from framework.providers.cargo import cargo_install
 install_apt_packages("Shell Tools", [
     "autojump",
     "bat",
+    "chafa",
     "cmake",
     "cowsay",
     "curl",
